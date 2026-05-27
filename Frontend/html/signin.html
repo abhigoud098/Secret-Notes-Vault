@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signup</title>
+    <link rel="stylesheet" href="../css/sighin.css" />
+  </head>
+  <body>
+    <div class="signup-box">
+      <h1>🚀 Signup</h1>
+
+      <form action="http://localhost:8000/user" method="post">
+        <div class="input-box">
+          <input type="text" placeholder="Enter FirstName" name="first_name" />
+        </div>
+
+        <div class="input-box">
+          <input type="text" placeholder="Enter LastName" name="last_name" />
+        </div>
+
+        <div class="input-box">
+          <input type="email" placeholder="Enter Email" name="email" />
+        </div>
+
+        <div class="input-box">
+          <input
+            type="password"
+            placeholder="Create Password"
+            name="password"
+          />
+        </div>
+
+        <button class="btn" type="submit">Create Account</button>
+      </form>
+      <p>if you are all ready signin please <a href="./login.html">Login</a></p>
+    </div>
+  </body>
+</html>
