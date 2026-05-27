@@ -1,3 +1,4 @@
+```
 Secret Notes Vault
 
 A secure full stack notes application where users can create and manage private notes with authentication using JWT and cookies. 🚀
@@ -80,3 +81,4 @@ Future Improvements
 Author
 
 Made with 💻 by Snapcode
+```
