@@ -9,7 +9,8 @@ addNotesBtn.addEventListener("click", () => {
 <div class="container">
 
   <form action="http://localhost:8000/note" class="notes-create-form" method="post">
-    <button class="close-btn">✖</button>
+
+   <button type="button" class="close-btn">✖</button>
 
     <h2>Create Notes</h2>
 
@@ -33,4 +34,18 @@ addNotesBtn.addEventListener("click", () => {
   </form>
 
 </div>`;
+
+  const closeFormBtn = document.querySelector(".close-btn");
+
+  closeFormBtn.addEventListener("click", () => {
+    notesAddForm.classList.remove("active");
+  });
 });
+
+async function deleteNote(id) {
+  const response = await fetch(`/note/delete/${id}`, { method: "DELETE" });
+
+  if (response.ok) {
+    location.reload();
+  }
+}

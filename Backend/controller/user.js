@@ -1,6 +1,6 @@
 const User = require("../model/user");
 const { setUser } = require("../services/auth");
-
+const { allNotes } = require("./notes");
 //Handle Signin...
 async function handleSigninUser(req, res) {
   const { first_name, last_name, email, password } = req.body;
@@ -37,10 +37,12 @@ async function handleLoginUser(req, res) {
   if (user) {
     const token = setUser(user);
     res.cookie("userToken", token);
-    return res.render("home/home", {user});
+    return res.render("home/home", { allNotes });
   }
 
-  return res.send("Password or email is not correct or if you not Signin please Signin");
+  return res.send(
+    "Password or email is not correct or if you not Signin please Signin",
+  );
 }
 
 module.exports = {

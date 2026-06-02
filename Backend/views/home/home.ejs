@@ -16,8 +16,7 @@
     </nav>
 
     <section class="welcome-box">
-      <h1>Welcome, <%= user.first_name %> 👋</h1>
-      <p>Your private notes are safe inside the vault.</p>
+      <h1>Welcome Private Notes Web App 👋</h1>
     </section>
 
     <section class="notes-section">
@@ -30,15 +29,21 @@
       </div>
 
       <div class="notes-container">
+        <% for( let index = 0; index < allNotes.length; index++ ) {
+          const note = allNotes[index];
+           %>
+      
         <div class="note-card">
-          <h3>Learn JWT</h3>
-          <p>Understand authentication flow using cookies and middleware.</p>
+                      <h3><%= note.title %></h3>
+
+            <p><%= note.note %></p>
 
           <div class="card-buttons">
             <button class="edit-btn">Edit</button>
-            <button class="delete-btn">Delete</button>
+            <button class="delete-btn" onclick="deleteNote('<%= note._id %>')">Delete</button>
           </div>
         </div>
+        <% } %>
       </div>
     </section>
     <script src="/js/script.js"></script>
