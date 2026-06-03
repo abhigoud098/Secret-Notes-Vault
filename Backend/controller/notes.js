@@ -13,7 +13,7 @@ async function handleNotesInfo(req, res) {
     note,
   });
   allNotes = await userAllNotes();
-  return res.render("home/home", { allNotes });
+  return res.render("home/home", { allNotes, user: req.user });
 }
 
 //Give all notes which ia present in DB
@@ -41,7 +41,7 @@ async function updateNote(req, res) {
 
   await Notes.findByIdAndUpdate(id, { title, note });
   allNotes = await userAllNotes();
-  res.render("home/home", { allNotes });
+  res.render("home/home", { allNotes, user: req.user });
 }
 
 module.exports = {

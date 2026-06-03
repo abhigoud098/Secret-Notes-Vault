@@ -37,7 +37,7 @@ async function handleLoginUser(req, res) {
   if (user) {
     const token = setUser(user);
     res.cookie("userToken", token);
-    return res.render("home/home", { allNotes });
+    return res.render("home/home", { allNotes, user });
   }
 
   return res.send(

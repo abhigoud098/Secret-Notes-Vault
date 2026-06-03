@@ -7,6 +7,7 @@ const staticRoutes = require("./routes/StaticRoutes");
 const userRoute = require("./routes/user");
 const cookieParser = require("cookie-parser");
 const noteRoute = require("./routes/note");
+const { userRestrictToLogIn } = require("./middleware/userAuth");
 
 //MongoDb connection...
 connectToMongoDB("mongodb://127.0.0.1:27017/private_notes").then(() => {
@@ -28,7 +29,7 @@ app.use(express.static(path.join(__dirname, "public"))); // Use for run public f
 //Routes...
 app.use("/", staticRoutes);
 app.use("/user", userRoute);
-app.use("/note", noteRoute);
+app.use("/note", userRestrictToLogIn, noteRoute);
 
 //Listening on port 8000...
 app.listen(8000, () => {
