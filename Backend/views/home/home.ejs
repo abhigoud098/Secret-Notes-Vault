@@ -39,7 +39,7 @@
             <p><%= note.note %></p>
 
           <div class="card-buttons">
-            <button class="edit-btn">Edit</button>
+            <button class="edit-btn" onclick="editNote('<%= note._id %>')">Edit</button>
             <button class="delete-btn" onclick="deleteNote('<%= note._id %>')">Delete</button>
           </div>
         </div>

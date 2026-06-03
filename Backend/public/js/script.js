@@ -49,3 +49,48 @@ async function deleteNote(id) {
     location.reload();
   }
 }
+
+async function editNote(id) {
+  const response = await fetch(`/note/edit/${id}`, { method: "GET" });
+  const noteData = await response.json();
+
+  if (!noteData) {
+    return response.send("This kind of notes is not present...");
+  }
+
+  notesAddForm.classList.add("active");
+  notesAddForm.innerHTML = `
+   <div class="container">
+
+   <form action="http://localhost:8000/note/update/${noteData._id}" class="notes-create-form" method="post">
+
+   <button type="button" class="close-btn">✖</button>
+
+    <h2>Create Notes</h2>
+
+    <input 
+      type="text" 
+      class="input-field"
+      name ="title"
+      value="${noteData.title}"
+    />
+
+    <textarea 
+      class="textarea-field"
+      name = "note"
+    >${noteData.note}</textarea>
+
+    <button type="submit" class="submit-btn">
+     Update
+    </button>
+
+   </form>
+
+  </div>`;
+
+  const closeFormBtn = document.querySelector(".close-btn");
+
+  closeFormBtn.addEventListener("click", () => {
+    notesAddForm.classList.remove("active");
+  });
+}
