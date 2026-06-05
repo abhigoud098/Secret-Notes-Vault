@@ -1,51 +1,99 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Secret Notes Vault</title>
-    <link rel="stylesheet" href="/css/home.css" />
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secret Vault</title>
+  <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
 
-  <body>
-    <nav class="navbar">
-      <div class="logo">🔐 Secret Vault</div>
-      <a href="/login">
-        <button class="logout-btn">Logout</button>
-      </a>
-    </nav>
+  <div class="glow"></div>
 
-    <section class="welcome-box">
-      <h1>Welcome Private Notes <%= user.first_name %> 👋</h1>
-    </section>
+  <nav class="navbar">
+    <div>
+      <h2 class="logo">🔐 Secret Vault</h2>
+      <p class="welcome-text">
+        Welcome back, <%= user.first_name %> 👋
+      </p>
+    </div>
 
-    <section class="notes-section">
-      <div class="notes-header">
-        <h2>Your Notes</h2>
-        <button class="add-note-btn">+ Add Note</button>
-      </div>
+    <a href="/logout">
+      <button class="logout-btn">Logout</button>
+    </a>
+  </nav>
 
-      <div class="notes-form">
-      </div>
+  <section class="hero">
+    <h1>Your Private Notes Wall</h1>
+    <p>
+      Securely store your thoughts, ideas and important
+      information in one place.
+    </p>
 
-      <div class="notes-container">
-        <% for( let index = 0; index < allNotes.length; index++ ) {
-          const note = allNotes[index];
-           %>
-      
-        <div class="note-card">
-                      <h3><%= note.title %></h3>
+    <button class="add-note-btn">
+      + Add New Note
+    </button>
+  </section>
 
-            <p><%= note.note %></p>
+  <section class="notes-form">
+    <!-- Your existing popup form goes here -->
+  </section>
 
-          <div class="card-buttons">
-            <button class="edit-btn" onclick="editNote('<%= note._id %>')">Edit</button>
-            <button class="delete-btn" onclick="deleteNote('<%= note._id %>')">Delete</button>
-          </div>
+  <% if(allNotes.length === 0){ %>
+
+    <div class="empty-state">
+      <div class="empty-icon">📭</div>
+
+      <h2>No Notes Yet</h2>
+
+      <p>
+        Create your first note and start building
+        your secret vault.
+      </p>
+    </div>
+
+  <% } %>
+
+  <section class="notes-container">
+
+    <% for(let index = 0; index < allNotes.length; index++) {
+       const note = allNotes[index];
+    %>
+
+      <div class="note-card">
+
+        <h3><%= note.title %></h3>
+
+        <p>
+          <%= note.note %>
+        </p>
+
+        <div class="card-buttons">
+
+          <button
+            class="edit-btn"
+            onclick="editNote('<%= note._id %>')"
+          >
+            ✏️ Edit
+          </button>
+
+          <button
+            class="delete-btn"
+            onclick="deleteNote('<%= note._id %>')"
+          >
+            🗑 Delete
+          </button>
+
         </div>
-        <% } %>
+
       </div>
-    </section>
-    <script src="/js/script.js"></script>
-  </body>
+
+    <% } %>
+
+  </section>
+
+  <script src="/js/script.js"></script>
+
+</body>
 </html>
+

@@ -12,6 +12,7 @@ async function userRestrictToLogIn(req, res, next) {
   if (!user) return res.redirect("/login/login");
 
   req.user = user;
+
   next();
 }
 

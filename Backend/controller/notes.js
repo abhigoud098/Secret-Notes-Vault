@@ -1,7 +1,7 @@
 const Notes = require("../model/notes");
+let allNotes = [];
 
 //Handle notes info
-let allNotes = [];
 async function handleNotesInfo(req, res) {
   const { title, note } = req.body;
 
@@ -13,7 +13,9 @@ async function handleNotesInfo(req, res) {
     note,
   });
   allNotes = await userAllNotes();
-  return res.render("home/home", { allNotes, user: req.user });
+  console.log({ user: req.user });
+
+  return res.redirect("/home");
 }
 
 //Give all notes which ia present in DB
@@ -36,18 +38,29 @@ async function giveNoteData(req, res) {
 
 //Update note in db
 async function updateNote(req, res) {
+  
   const id = req.params.id;
   const { title, note } = req.body;
 
   await Notes.findByIdAndUpdate(id, { title, note });
-  allNotes = await userAllNotes();
+  const allNotes = await userAllNotes(); // -> This function give me updated notes...
   res.render("home/home", { allNotes, user: req.user });
+}
+
+//handle home page
+async function handleHomePage(req, res) {
+
+  return res.render("home/home", {
+    user: req.user,
+    allNotes,
+  });
 }
 
 module.exports = {
   handleNotesInfo,
-  allNotes,
   deleteUserNote,
   giveNoteData,
   updateNote,
+  allNotes,
+  handleHomePage,
 };
