@@ -1,9 +1,9 @@
 const User = require("../model/user");
 const { setUser } = require("../services/auth");
-const { allNotes } = require("./notes");
+const { allNotesCreateByNormalUser } = require("./notes");
 //Handle Signin...
 async function handleSigninUser(req, res) {
-  const { first_name, last_name, email, password } = req.body;
+  const { first_name, last_name, email, role, password } = req.body;
 
   const existingUser = await User.findOne({ email });
 
@@ -15,6 +15,7 @@ async function handleSigninUser(req, res) {
     first_name,
     last_name,
     email,
+    role,
     password,
   });
 
@@ -23,12 +24,13 @@ async function handleSigninUser(req, res) {
 
 //Handle login...
 async function handleLoginUser(req, res) {
-  const { email, password } = req.body;
+  const { email, role, password } = req.body;
 
   // console.log("BODY:", req.body);
 
   const user = await User.findOne({
     email,
+    role,
     password,
   });
 
@@ -37,7 +39,7 @@ async function handleLoginUser(req, res) {
   if (user) {
     const token = setUser(user);
     res.cookie("userToken", token);
-    return res.render("home/home", { allNotes, user });
+    return res.render("home/home", { allNotesCreateByNormalUser, user });
   }
 
   return res.send(

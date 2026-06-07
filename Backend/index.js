@@ -7,7 +7,7 @@ const staticRoutes = require("./routes/StaticRoutes");
 const userRoute = require("./routes/user");
 const cookieParser = require("cookie-parser");
 const noteRoute = require("./routes/note");
-const { userRestrictToLogIn } = require("./middleware/userAuth");
+const { restrictToCheckAuthorized} = require("./middleware/userAuth");
 
 //MongoDb connection...
 connectToMongoDB("mongodb://127.0.0.1:27017/private_notes").then(() => {
@@ -17,9 +17,9 @@ connectToMongoDB("mongodb://127.0.0.1:27017/private_notes").then(() => {
 const app = express();
 
 //Middleware...
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.use(cookieParser());
+app.use(express.urlencoded({ extended: false })); //For read params data
+app.use(express.json()); //Read json data
+app.use(cookieParser()); //For read cookies
 
 //Tell the server which technology i want to use for server side rend ring...
 app.set("view engine", "ejs");
@@ -27,9 +27,9 @@ app.set("views", path.resolve("./views"));
 app.use(express.static(path.join(__dirname, "public"))); // Use for run public folder files it access able for browser....
 
 //Routes...
-app.use("/", staticRoutes);
-app.use("/user", userRoute);
-app.use("/note", userRestrictToLogIn, noteRoute);
+app.use("/",  staticRoutes); //For showing the pages
+app.use("/user", userRoute); //For user route handle user related work
+app.use("/note", noteRoute); //Notes related work
 
 //Listening on port 8000...
 app.listen(8000, () => {

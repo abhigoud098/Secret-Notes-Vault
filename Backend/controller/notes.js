@@ -1,5 +1,6 @@
 const Notes = require("../model/notes");
-let allNotes = [];
+const {user} = require("../middleware/userAuth")
+let allNotesCreateByNormalUser = [];
 
 //Handle notes info
 async function handleNotesInfo(req, res) {
@@ -12,16 +13,16 @@ async function handleNotesInfo(req, res) {
     title,
     note,
   });
-  allNotes = await userAllNotes();
-  console.log({ user: req.user });
 
   return res.redirect("/home");
 }
 
-//Give all notes which ia present in DB
-async function userAllNotes() {
-  const userNotes = await Notes.find();
-  return userNotes;
+//Give all notes a created by normal user present in DB
+async function userAllNotes(id) {
+  const normalUserAllNotes = await Notes.find({
+    createdBy: id,
+  });
+  return normalUserAllNotes;
 }
 
 //Delete notes in DB
@@ -38,21 +39,19 @@ async function giveNoteData(req, res) {
 
 //Update note in db
 async function updateNote(req, res) {
-  
   const id = req.params.id;
   const { title, note } = req.body;
 
   await Notes.findByIdAndUpdate(id, { title, note });
-  const allNotes = await userAllNotes(); // -> This function give me updated notes...
-  res.render("home/home", { allNotes, user: req.user });
+  allNotesCreateByNormalUser = await userAllNotes(id); // -> This function give me updated notes...
+  res.render("home/home", { allNotesCreateByNormalUser, user: req.user });
 }
 
 //handle home page
 async function handleHomePage(req, res) {
-
   return res.render("home/home", {
-    user: req.user,
-    allNotes,
+    user,
+    allNotesCreateByNormalUser,
   });
 }
 
@@ -61,6 +60,6 @@ module.exports = {
   deleteUserNote,
   giveNoteData,
   updateNote,
-  allNotes,
+  allNotesCreateByNormalUser,
   handleHomePage,
 };

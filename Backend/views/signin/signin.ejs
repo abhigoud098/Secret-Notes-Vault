@@ -10,7 +10,7 @@
     <div class="signup-box">
       <h1>🚀 Signup</h1>
 
-      <form action="http://localhost:8000/user" method="post">
+      <form action="/user" method="post">
         <div class="input-box">
           <input type="text" placeholder="Enter FirstName" name="first_name" />
         </div>
@@ -23,6 +23,10 @@
           <input type="email" placeholder="Enter Email" name="email" />
         </div>
 
+         <div class="input-box">
+          <input type="text" placeholder="Enter Role" name="role" />
+        </div>
+
         <div class="input-box">
           <input
             type="password"
@@ -33,7 +37,7 @@
 
         <button class="btn" type="submit">Create Account</button>
       </form>
-      <p>if you are all ready signin please <a href="./login.html">Login</a></p>
+      <p>if you are all ready signin please <a href="/login">Login</a></p>
     </div>
   </body>
 </html>

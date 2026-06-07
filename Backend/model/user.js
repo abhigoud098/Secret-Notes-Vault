@@ -19,6 +19,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
+    role: {
+      type: String,
+      require: true,
+      default: "NORMAL",
+    },
   },
   { timestamps: true }, //This thing auto matic added in mongoose createdAT or updatedAt time it help farther...
 );

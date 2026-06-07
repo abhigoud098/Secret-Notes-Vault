@@ -10,19 +10,23 @@
     <div class="login-box">
       <h1>🔐 Login</h1>
 
-      <form action="http://localhost:8000/user/login" method="post">
+      <form action="/user/login" method="post">
         <div class="input-box">
-          <input type="email" placeholder="Enter Email" name="email"/>
+          <input type="email" placeholder="Enter Email" name="email" />
         </div>
 
         <div class="input-box">
-          <input type="password" placeholder="Enter Password" name="password"/>
+          <input type="text" placeholder="Enter Role" name="role" />
+        </div>
+
+        <div class="input-box">
+          <input type="password" placeholder="Enter Password" name="password" />
         </div>
 
         <button class="btn" type="submit">Login</button>
       </form>
 
-      <p>if you are not signin please <a href="./signin.html">signin</a></p>
+      <p>if you are not signin please <a href="/signin">signin</a></p>
     </div>
   </body>
 </html>

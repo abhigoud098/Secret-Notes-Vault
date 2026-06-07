@@ -1,8 +1,8 @@
 const { handleHomePage } = require("../controller/notes");
-const { userRestrictToLogIn } = require("../middleware/userAuth");
-//This file we use for fix routes...
 
+//This file we use for fix routes...
 const express = require("express");
+const { userRestrictToLogIn } = require("../middleware/userAuth");
 
 const router = express.Router();
 
@@ -22,6 +22,6 @@ router.get("/signin", (req, res) => {
 });
 
 //Handle after making note to render home page
-router.get("/home", userRestrictToLogIn, handleHomePage);
+router.get("/home", handleHomePage);
 
 module.exports = router;

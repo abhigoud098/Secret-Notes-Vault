@@ -39,7 +39,7 @@
     <!-- Your existing popup form goes here -->
   </section>
 
-  <% if(allNotes.length === 0){ %>
+  <% if(allNotesCreateByNormalUser.length === 0){ %>
 
     <div class="empty-state">
       <div class="empty-icon">📭</div>
@@ -56,8 +56,8 @@
 
   <section class="notes-container">
 
-    <% for(let index = 0; index < allNotes.length; index++) {
-       const note = allNotes[index];
+    <% for(let index = 0; index < allNotesCreateByNormalUser.length; index++) {
+       const note = allNotesCreateByNormalUser[index];
     %>
 
       <div class="note-card">
