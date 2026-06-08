@@ -5,6 +5,15 @@ const { allNotesCreateByNormalUser } = require("./notes");
 async function handleSigninUser(req, res) {
   const { first_name, last_name, email, role, password } = req.body;
 
+  if (
+    first_name === "" ||
+    last_name === "" ||
+    email === "" ||
+    role === "" ||
+    password === ""
+  )
+    return res.send("Every field is require fill every information");
+
   const existingUser = await User.findOne({ email });
 
   if (existingUser) {
@@ -26,6 +35,9 @@ async function handleSigninUser(req, res) {
 async function handleLoginUser(req, res) {
   const { email, role, password } = req.body;
 
+  if (email === "" || role === "" || password === "")
+    return res.send("Fill every field is require...");
+
   // console.log("BODY:", req.body);
 
   const user = await User.findOne({
@@ -38,8 +50,8 @@ async function handleLoginUser(req, res) {
 
   if (user) {
     const token = setUser(user);
-    res.cookie("userToken", token);
-    return res.render("home/home", { allNotesCreateByNormalUser, user });
+    res.cookie("token", token);
+    return res.redirect("/home");
   }
 
   return res.send(

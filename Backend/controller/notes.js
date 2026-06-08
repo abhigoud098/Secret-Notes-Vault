@@ -1,5 +1,4 @@
 const Notes = require("../model/notes");
-const {user} = require("../middleware/userAuth")
 let allNotesCreateByNormalUser = [];
 
 //Handle notes info
@@ -7,7 +6,7 @@ async function handleNotesInfo(req, res) {
   const { title, note } = req.body;
 
   if (title === "" || note === "")
-    return res.send("Note is empty please fill title or note");
+    return res.send("Please fill note title or note...");
 
   await Notes.create({
     title,
@@ -18,10 +17,11 @@ async function handleNotesInfo(req, res) {
 }
 
 //Give all notes a created by normal user present in DB
-async function userAllNotes(id) {
+async function userAllNotes() {
   const normalUserAllNotes = await Notes.find({
-    createdBy: id,
+    createdBy: req.user._id,
   });
+  console.log(normalUserAllNotes);
   return normalUserAllNotes;
 }
 
@@ -31,26 +31,26 @@ async function deleteUserNote(req, res) {
   res.sendStatus(200);
 }
 
-//Get notes Data
+//Get notes Data for update by user notes
 async function giveNoteData(req, res) {
   const noteData = await Notes.findById(req.params.id);
   res.json(noteData);
 }
 
-//Update note in db
+//Update note in db update notes by user
 async function updateNote(req, res) {
   const id = req.params.id;
   const { title, note } = req.body;
 
   await Notes.findByIdAndUpdate(id, { title, note });
-  allNotesCreateByNormalUser = await userAllNotes(id); // -> This function give me updated notes...
-  res.render("home/home", { allNotesCreateByNormalUser, user: req.user });
+  allNotesCreateByNormalUser = await userAllNotes(); // -> This function give me updated notes...
+  res.render("home/home", { allNotesCreateByNormalUser, user });
 }
 
 //handle home page
 async function handleHomePage(req, res) {
   return res.render("home/home", {
-    user,
+    user: req.user,
     allNotesCreateByNormalUser,
   });
 }

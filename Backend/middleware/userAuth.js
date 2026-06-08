@@ -1,5 +1,4 @@
 const { getUser } = require("../services/auth");
-const user = {};
 
 // async function userRestrictToLogIn(req, res, next) {  //Authentication only for valid "Browser User" so we use another way for Auth...
 //   const userLogIn = req.cookies.userToken;
@@ -17,19 +16,34 @@ const user = {};
 //   next();
 // }
 
-//This why we Authenticate any device not only in browser;
-async function userRestrictToLogIn(req, res, next) {
-  // Authorization : Bearer <JWT Token> <-- this Authorization property in header inbuilt for sending a token to server.
-  const userUid = req.headers.authorization; //Why we write like ["Authorization"] --> because of this property is in variable like variable name is Auth = "Authorization";
+// //This why we Authenticate any device not only in browser;
+// async function userRestrictToLogIn(req, res, next) {
+//   // Authorization : Bearer <JWT Token> <-- this Authorization property in header inbuilt for sending a token to server.
+//   const userUid = req.headers["Authorization"]; //Why we write like ["Authorization"] --> because of this property is in variable like variable name is Auth = "Authorization";
+//   console.log(userUid);
+//   //UserUid --> we have "Token"
+//   if (!userUid) return res.redirect("/login");
+//   const token = userUid.split("Bearer ")[1]; // "Bearer [token]" something like this what we want to access
+//   console.log(token);
+//   user = getUser(token);
 
-  //UserUid --> we have "Token"
-  if (!userUid) return res.redirect("/login");
-  const token = userUid.split("Bearer ")[1]; // "Bearer [token]" something like this what we want to access
-  user = getUser(token);
+//   req.user = user;
+
+//   next(); //this will after run next() then it call next middleware
+// }
+
+function checkForAuthentication(req, res, next) {
+  const tokenCookies = req.cookies?.token;
+
+  req.user = null; // with thi line app is not going to crash
+
+  if (!tokenCookies) return next();
+
+  const token = tokenCookies;
+  const user = getUser(token);
 
   req.user = user;
-
-  next(); //this will after run next() then it call next middleware
+  return next();
 }
 
 //Authorization code
@@ -44,7 +58,6 @@ function restrictToCheckAuthorized(role = []) {
 }
 
 module.exports = {
-  userRestrictToLogIn,
+  checkForAuthentication,
   restrictToCheckAuthorized,
-  user,
 };

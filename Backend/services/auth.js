@@ -3,6 +3,7 @@ const secret = "Snapcode@09";
 
 function setUser(user) {
   const payload = {
+    _id: user._id,
     first_name: user.first_name,
     email: user.email,
     role: user.role,

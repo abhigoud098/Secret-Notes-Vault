@@ -7,7 +7,7 @@ const staticRoutes = require("./routes/StaticRoutes");
 const userRoute = require("./routes/user");
 const cookieParser = require("cookie-parser");
 const noteRoute = require("./routes/note");
-const { restrictToCheckAuthorized} = require("./middleware/userAuth");
+const { checkForAuthentication } = require("./middleware/userAuth")
 
 //MongoDb connection...
 connectToMongoDB("mongodb://127.0.0.1:27017/private_notes").then(() => {
@@ -27,9 +27,9 @@ app.set("views", path.resolve("./views"));
 app.use(express.static(path.join(__dirname, "public"))); // Use for run public folder files it access able for browser....
 
 //Routes...
-app.use("/",  staticRoutes); //For showing the pages
+app.use("/", staticRoutes); //For showing the pages
 app.use("/user", userRoute); //For user route handle user related work
-app.use("/note", noteRoute); //Notes related work
+app.use("/note", checkForAuthentication, noteRoute); //Notes related work
 
 //Listening on port 8000...
 app.listen(8000, () => {
