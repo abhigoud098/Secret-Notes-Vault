@@ -1,4 +1,6 @@
+const { default: mongoose } = require("mongoose");
 const Notes = require("../model/notes");
+const nodemon = require("nodemon");
 let allNotesCreateByNormalUser = [];
 
 //Handle notes info
@@ -11,18 +13,21 @@ async function handleNotesInfo(req, res) {
   await Notes.create({
     title,
     note,
+    createdBy: req.user._id,
   });
+
+  userAllNotes(req.user._id);
 
   return res.redirect("/home");
 }
 
 //Give all notes a created by normal user present in DB
-async function userAllNotes() {
+async function userAllNotes(_id) {
   const normalUserAllNotes = await Notes.find({
-    createdBy: req.user._id,
+    createdBy: _id,
   });
-  console.log(normalUserAllNotes);
-  return normalUserAllNotes;
+
+  allNotesCreateByNormalUser = normalUserAllNotes;
 }
 
 //Delete notes in DB
@@ -43,8 +48,9 @@ async function updateNote(req, res) {
   const { title, note } = req.body;
 
   await Notes.findByIdAndUpdate(id, { title, note });
-  allNotesCreateByNormalUser = await userAllNotes(); // -> This function give me updated notes...
-  res.render("home/home", { allNotesCreateByNormalUser, user });
+
+  userAllNotes(id); // -> This function give me updated notes...
+  res.render("home/home", { allNotesCreateByNormalUser, user: req.user });
 }
 
 //handle home page

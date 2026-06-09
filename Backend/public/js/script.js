@@ -94,10 +94,3 @@ async function editNote(id) {
     notesAddForm.classList.remove("active");
   });
 }
-
-//Handle error msg 
-document.querySelector(".close-btn")
-  .addEventListener("click", () => {
-    document.querySelector(".popup-overlay")
-      .style.display = "none";
-  });
