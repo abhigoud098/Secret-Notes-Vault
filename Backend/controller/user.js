@@ -1,6 +1,6 @@
 const User = require("../model/user");
 const { setUser } = require("../services/auth");
-const { allNotesCreateByNormalUser } = require("./notes");
+
 //Handle Signin...
 async function handleSigninUser(req, res) {
   const { first_name, last_name, email, role, password } = req.body;
@@ -51,7 +51,13 @@ async function handleLoginUser(req, res) {
   if (user) {
     const token = setUser(user);
     res.cookie("token", token);
-    return res.redirect("/home");
+    if (user.role === "normal") {
+      return res.redirect("/home");
+    }
+
+    if (user.role === "admin") {
+      return res.redirect("/admin");
+    }
   }
 
   return res.send(

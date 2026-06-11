@@ -1,6 +1,5 @@
 const { default: mongoose } = require("mongoose");
 const Notes = require("../model/notes");
-const nodemon = require("nodemon");
 let allNotesCreateByNormalUser = [];
 
 //Handle notes info
@@ -16,7 +15,7 @@ async function handleNotesInfo(req, res) {
     createdBy: req.user._id,
   });
 
-  userAllNotes(req.user._id);
+  await userAllNotes(req.user._id);
 
   return res.redirect("/home");
 }
@@ -33,6 +32,7 @@ async function userAllNotes(_id) {
 //Delete notes in DB
 async function deleteUserNote(req, res) {
   await Notes.findByIdAndDelete(req.params.id);
+  await userAllNotes(req.user._id);
   res.sendStatus(200);
 }
 
@@ -47,14 +47,19 @@ async function updateNote(req, res) {
   const id = req.params.id;
   const { title, note } = req.body;
 
-  await Notes.findByIdAndUpdate(id, { title, note });
+  //Update in db
+  await Notes.findByIdAndUpdate(id, {
+    title,
+    note,
+  });
 
-  userAllNotes(id); // -> This function give me updated notes...
+  await userAllNotes(req.user._id); // -> This function give me updated notes...
+
   res.render("home/home", { allNotesCreateByNormalUser, user: req.user });
 }
 
 //handle home page
-async function handleHomePage(req, res) {
+function handleHomePage(req, res) {
   return res.render("home/home", {
     user: req.user,
     allNotesCreateByNormalUser,
@@ -68,4 +73,5 @@ module.exports = {
   updateNote,
   allNotesCreateByNormalUser,
   handleHomePage,
+  userAllNotes,
 };

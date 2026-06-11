@@ -1,4 +1,5 @@
 const { handleHomePage } = require("../controller/notes");
+const { restrictToCheckAuthorized } = require("../middleware/userAuth");
 
 //This file we use for fix routes...
 const express = require("express");
@@ -9,6 +10,10 @@ const router = express.Router();
 //Render home page...
 router.get("/", (req, res) => {
   return res.render("landingPage/landingPage");
+});
+
+router.get("/admin", restrictToCheckAuthorized(["admin"]), (req, res) => {
+  return res.render("admin/admin");
 });
 
 //Handle logout route...

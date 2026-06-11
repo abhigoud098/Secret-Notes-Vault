@@ -1,4 +1,5 @@
 const { getUser } = require("../services/auth");
+const { userAllNotes } = require("../controller/notes");
 
 // async function userRestrictToLogIn(req, res, next) {  //Authentication only for valid "Browser User" so we use another way for Auth...
 //   const userLogIn = req.cookies.userToken;
@@ -48,10 +49,14 @@ function checkForAuthentication(req, res, next) {
 
 //Authorization code
 function restrictToCheckAuthorized(role = []) {
-  return function (req, res, next) {
+  return async function (req, res, next) {
     if (!req.user) return res.redirect("/login");
 
     if (!role.includes(req.user.role)) return res.end("UnAuthorized");
+
+    if (req.user.role === "normal") {
+      await userAllNotes(req.user._id);
+    }
 
     return next(); //Next middle where call immediately
   };
