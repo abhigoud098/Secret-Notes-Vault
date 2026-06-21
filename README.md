@@ -186,18 +186,6 @@ The Admin Panel provides:
 
 ---
 
-## 📸 Screenshots
-
-Add screenshots for:
-
-* Login Page
-* Registration Page
-* User Dashboard
-* Notes Management Page
-* Admin Dashboard
-
----
-
 ## 👨‍💻 Author
 
 **Abhishek Goud**
