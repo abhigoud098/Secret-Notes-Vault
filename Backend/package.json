@@ -1,4 +1,9 @@
 {
+  "name": "backend",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "cookie-parser": "^1.4.7",
     "ejs": "^5.0.2",
