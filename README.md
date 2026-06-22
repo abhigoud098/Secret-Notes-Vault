@@ -106,15 +106,8 @@ npm install
 
 ### Run Application
 
-Development:
-
 ```bash
 nodemon index.js
-```
-
-Production:
-
-```bash
 node index.js
 ```
 
