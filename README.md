@@ -103,16 +103,6 @@ cd secret-notes-vault
 
 ```bash
 npm install
-```
-
-### Configure Environment Variables
-
-Create a `.env` file:
-
-```env
-MONGO_URL=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
-```
 
 ### Run Application
 
