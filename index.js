@@ -13,9 +13,7 @@ const {
 } = require("./middleware/userAuth");
 
 //MongoDb connection...
-connectToMongoDB("mongodb://127.0.0.1:27017/private_notes").then(() => {
-  console.log("Mongoose is connected");
-});
+connectToMongoDB(process.env.MONGO_URL)
 
 const app = express();
 
@@ -40,6 +38,8 @@ app.use(
 ); //Notes related work
 
 //Listening on port 8000...
-app.listen(8000, () => {
+const PORT = process.env.PORT || 8000;
+
+app.listen(PORT, () => {
   console.log("Server is running");
 });
