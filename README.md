@@ -103,6 +103,7 @@ cd secret-notes-vault
 
 ```bash
 npm install
+```
 
 ### Run Application
 
